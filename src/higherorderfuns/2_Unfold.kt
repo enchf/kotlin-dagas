@@ -1,8 +1,7 @@
 package higherorderfuns
 
-fun Int.unfold(initial: List<Int> = listOf(), until: Int.() -> Boolean, block: Int.() -> Int): List<Int> =
-        with(initial.plus(this)) { if (until()) this else block().unfold(this, until, block) }
+fun Int.unfold(block: (Int) -> Int) = generateSequence(this, block)
 
-fun main(args: Array<String>) = 22
-        .unfold( until = { equals(1) }, block = { if (rem(2) == 0) div(2) else times(3).plus(1) } )
-        .let(::print)
+fun Int.collatz(): List<Int> = unfold { if (it % 2 == 0) it / 2 else it * 3 + 1 }.takeWhile { it != 1 }.toList()
+
+fun main(args: Array<String>) = 22.collatz().let(::print)
