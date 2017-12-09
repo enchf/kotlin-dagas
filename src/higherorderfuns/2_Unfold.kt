@@ -4,5 +4,5 @@ fun Int.unfold(initial: List<Int> = listOf(), until: Int.() -> Boolean, block: I
         with(initial.plus(this)) { if (until()) this else block().unfold(this, until, block) }
 
 fun main(args: Array<String>) = 22
-        .unfold( until = { this == 1 }, block = { if (this % 2 == 0) this / 2 else 3 * this + 1 } )
+        .unfold( until = { equals(1) }, block = { if (rem(2) == 0) div(2) else times(3).plus(1) } )
         .let(::print)
